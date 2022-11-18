@@ -1,0 +1,11 @@
+{
+  "wasmHostProperties": {
+    "perHostConfig": [
+      {
+        "name": "deno",
+        "js-path": "main.mjs",
+        "Host": "deno"
+      }
+    ]
+  }
+}
