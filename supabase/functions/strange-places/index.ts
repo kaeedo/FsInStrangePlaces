@@ -1,18 +1,21 @@
-// Follow this setup guide to integrate the Deno language server with your editor:
-// https://deno.land/manual/getting_started/setup_your_environment
-// This enables autocomplete, go to definition, etc.
-
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
 import { dotnet } from 'https://nrbugkfcgdkezlaqbbeb.supabase.co/storage/v1/object/public/build/dotnet.js'
-import { log, setDiceRolls, getDiceRolls } from 'https://nrbugkfcgdkezlaqbbeb.supabase.co/storage/v1/object/public/build/main.mjs?t=2022-11-17T14%3A34%3A27.149Z';
 
-console.log("Hello from Functions!")
+export function log (text: string) {
+  console.log(text)
+}
+
+let diceRolls: Number[] = [];
+export function setDiceRolls(rolls: Number []) {
+  console.log('setting rolls')
+  diceRolls = rolls
+}
 
 const { setModuleImports, getAssemblyExports, getConfig } = await dotnet
     .withDiagnosticTracing(false)
     .create();
 
-setModuleImports("main.mjs", {
+setModuleImports("index.ts", {
     log: log,
     setDiceRolls: setDiceRolls
 })
@@ -28,10 +31,10 @@ serve(async (req: Request) => {
   }
 
   await exports.Program.RollDice();
-  console.log('Rolls performed: ', getDiceRolls())
+  console.log('Rolls performed: ', diceRolls)
 
   return new Response(
-    JSON.stringify(getDiceRolls()),
+    JSON.stringify(diceRolls),
     { headers: { "Content-Type": "application/json" } },
   )
 })

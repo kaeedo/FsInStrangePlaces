@@ -21,10 +21,10 @@ public partial class Program
         SetDiceRolls(rolls);
     }
     
-    [JSImport("log", "main.mjs")]
+    [JSImport("log", "index.ts")]
     internal static partial void Log(string stuff);
     
-    [JSImport("setDiceRolls", "main.mjs")]
+    [JSImport("setDiceRolls", "index.ts")]
     internal static partial void SetDiceRolls([JSMarshalAs<JSType.Array<JSType.Number>>]int[] rolls);
     // https://learn.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/import-export-interop?view=aspnetcore-7.0#call-javascript-from-net
     
